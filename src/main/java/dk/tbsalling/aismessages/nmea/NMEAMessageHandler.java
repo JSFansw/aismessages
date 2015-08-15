@@ -40,11 +40,15 @@ public class NMEAMessageHandler implements Consumer<NMEAMessage> {
     private static final Logger LOG = Logger.getLogger(NMEAMessageHandler.class.getName());
 
     private final String source;
+    //可随机读取的list用来存储一个完整信息的信息段
     private final ArrayList<NMEAMessage> messageFragments = new ArrayList<>();
+    //线性的list用来装AISMessage，解析过的每一条aismessage信息都会按顺序存储，最后被读取
     private final List<Consumer<? super AISMessage>> aisMessageReceivers = new LinkedList<>();
 
     public NMEAMessageHandler(String source, Consumer<? super AISMessage>... aisMessageReceivers) {
+    	//source的作用是标记信息的来源    	
     	this.source = source;
+    	//？？ 将传递过来的nmeaMessage信息进行存储进aisMessageReceiver？？
         for (Consumer<? super AISMessage> aisMessageReceiver : aisMessageReceivers) {
             addAisMessageReceiver(aisMessageReceiver);
         }
@@ -57,21 +61,25 @@ public class NMEAMessageHandler implements Consumer<NMEAMessage> {
     @Override
     public void accept(NMEAMessage nmeaMessage) {
 		LOG.finer("Received for processing: " + nmeaMessage.getRawMessage());
-		
+		//isvalid() 是检查是不是可解析的数据类型
 		if (! nmeaMessage.isValid()) {
 			LOG.warning("NMEA message is invalid: " + nmeaMessage.toString());
 			return;
 		}
-		
+		//检查是完整数据有几条子数据
 		int numberOfFragments = nmeaMessage.getNumberOfFragments();
 		if (numberOfFragments <= 0) {
 			LOG.warning("NMEA message is invalid: " + nmeaMessage.toString());
 			messageFragments.clear();
+			//一条信息就能完整标示整个信息的情况
 		} else if (numberOfFragments == 1) {
 			LOG.finest("Handling unfragmented NMEA message");
+			//组建AISMessage
             AISMessage aisMessage = AISMessage.create(nmeaMessage);
             aisMessage.setMetadata(new Metadata(source));
+            //发送aisMessge 给所有有兴趣的人？也就是说，将更改之后的aisMessage返回给之前传入的变量
             sendToAisMessageReceivers(aisMessage);
+            //将存放多条信息的list清空
 			messageFragments.clear();
 		} else {
 			int fragmentNumber = nmeaMessage.getFragmentNumber();
@@ -107,7 +115,8 @@ public class NMEAMessageHandler implements Consumer<NMEAMessage> {
 
     /** Send encoded AIS message to all interested receivers. */
     private void sendToAisMessageReceivers(final AISMessage aisMessage) {
-        aisMessageReceivers.forEach(r -> r.accept(aisMessage));
+    	//????接收更改以后的aisMessage??  相当于update？？
+    	aisMessageReceivers.forEach(r -> r.accept(aisMessage));
     }
 
     /**

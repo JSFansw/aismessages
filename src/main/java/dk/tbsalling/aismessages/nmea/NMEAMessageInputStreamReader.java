@@ -47,11 +47,15 @@ public class NMEAMessageInputStreamReader {
 		InputStreamReader reader = new InputStreamReader(inputStream, Charset.defaultCharset());
 		BufferedReader bufferedReader = new BufferedReader(reader);
 		String string;
+		
 		while ((string = bufferedReader.readLine()) != null && !stopRequested()) {
 			try {
+				//组装NMEAMessage信息
 				NMEAMessage nmea = NMEAMessage.fromString(string);
+				//校验nmea信息
 				nmeaMessageHandler.accept(nmea);
-				log.fine("Received: " + nmea.toString());
+				
+	//			log.fine("Received: " + nmea.toString());
 			} catch (UnsupportedMessageType unsupportedMessageTypeException) {
 				log.warning("Received unsupported NMEA message: \"" + string + "\"");
 			} catch (NMEAParseException parseException) {

@@ -28,7 +28,9 @@ public class SocketDemoApp implements Consumer<AISMessage> {
 
     @Override
     public void accept(AISMessage aisMessage) {
+    	
         System.out.println("Received AIS message: " + aisMessage);
+        
     }
 
 	public void runDemo() {
