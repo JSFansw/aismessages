@@ -136,4 +136,9 @@ public class GroupAssignmentCommand extends AISMessage {
     private transient ReportingInterval reportingInterval;
     private transient Integer quietTime;
     private transient String spare2;
+	@Override
+	public void insert2DB() {
+		// TODO Auto-generated method stub
+		
+	}
 }

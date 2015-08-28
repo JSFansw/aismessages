@@ -54,4 +54,10 @@ public class UTCAndDateInquiry extends AISMessage {
     }
 
     private transient MMSI destinationMmsi;
+
+	@Override
+	public void insert2DB() {
+		// TODO Auto-generated method stub
+		
+	}
 }

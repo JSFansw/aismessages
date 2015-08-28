@@ -39,8 +39,8 @@ private static ConnectionPool single=null;
 
 public static ConnectionPool getInstance(){
 	if(single==null){
-		return new ConnectionPool("com.mysql.jdbc.Driver", "jdbc:mysql://127.0.0.1:3306/aisPython", "root",
-				"123");
+		return new ConnectionPool("com.mysql.jdbc.Driver", "jdbc:mysql://58.217.99.137/hl_ais", "root",
+				"root");
 	}else{
 		return single;
 	}

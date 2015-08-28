@@ -108,4 +108,9 @@ public class Interrogation extends AISMessage {
 	private transient MMSI interrogatedMmsi2;
 	private transient Integer type2_1;
 	private transient Integer offset2_1;
+	@Override
+	public void insert2DB() {
+		// TODO Auto-generated method stub
+		
+	}
 }

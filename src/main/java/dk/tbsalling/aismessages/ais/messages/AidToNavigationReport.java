@@ -202,4 +202,9 @@ public class AidToNavigationReport extends AISMessage {
     private transient Integer spare1;
     private transient String nameExtension;
     private transient Integer spare2;
+	@Override
+	public void insert2DB() {
+		// TODO Auto-generated method stub
+		
+	}
 }

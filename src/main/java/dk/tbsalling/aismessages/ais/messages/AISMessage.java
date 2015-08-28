@@ -91,6 +91,7 @@ public abstract class AISMessage implements Serializable, CachedDecodedValues {
         checkAISMessage();
     }
 
+    //用原始信息和转换成二进制信息的数据组建
     protected AISMessage(NMEAMessage[] nmeaMessages, String bitString) {
         requireNonNull(nmeaMessages);
         check(nmeaMessages);
@@ -177,6 +178,9 @@ public abstract class AISMessage implements Serializable, CachedDecodedValues {
     }
 
     public abstract AISMessageType getMessageType();
+    
+    public abstract void insert2DB();
+    
 
     @SuppressWarnings("unused")
 	public final Metadata getMetadata() {

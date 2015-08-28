@@ -196,5 +196,10 @@ public class StandardClassBCSPositionReport extends AISMessage implements Extend
 	private transient Boolean raimFlag;
 	private transient Boolean commStateSelectorFlag;
 	private transient WeakReference<CommunicationState> communicationState;
+	@Override
+	public void insert2DB() {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

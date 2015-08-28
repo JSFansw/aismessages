@@ -60,4 +60,9 @@ public class Error extends AISMessage {
 
     private final String rawMessage;
 	private final String errorDescription;
+	@Override
+	public void insert2DB() {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -51,4 +51,9 @@ public class PositionReportClassAScheduled extends PositionReport {
     public AISMessageType getMessageType() {
         return AISMessageType.PositionReportClassAScheduled;
     }
+
+	@Override
+	public void insert2DB() {
+		super.insert();
+	}
 }

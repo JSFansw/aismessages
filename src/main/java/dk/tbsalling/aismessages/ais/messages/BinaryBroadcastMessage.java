@@ -77,4 +77,9 @@ public class BinaryBroadcastMessage extends AISMessage {
     private transient Integer designatedAreaCode;
 	private transient Integer functionalId;
 	private transient String binaryData;
+	@Override
+	public void insert2DB() {
+		// TODO Auto-generated method stub
+		
+	}
 }

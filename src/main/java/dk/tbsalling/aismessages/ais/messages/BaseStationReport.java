@@ -15,6 +15,7 @@
  */
 
 package dk.tbsalling.aismessages.ais.messages;
+import dk.tbsalling.aismessages.ais.dao.DBTools;
 
 import dk.tbsalling.aismessages.ais.messages.types.AISMessageType;
 import dk.tbsalling.aismessages.ais.messages.types.PositionFixingDevice;
@@ -129,6 +130,21 @@ public class BaseStationReport extends AISMessage {
                 "} " + super.toString();
     }
 
+    
+	@Override
+	public void insert2DB() {
+		year =getYear();
+		month =getMonth();
+		day = getDay();
+		hour =getHour();
+		minute =getMinute();
+		second =getSecond();
+		Integer mmsi = getSourceMmsi().getMMSI();
+		latitude =getLatitude();
+		longitude = getLongitude();
+		String dateStr = year + "-" + month + "-" + day + " " + hour + ":" + minute+ ":" + second;
+		new DBTools().insert2baseStation(dateStr, mmsi, latitude, longitude);
+	}
     private transient Integer year;
     private transient Integer month;
     private transient Integer day;
@@ -141,4 +157,5 @@ public class BaseStationReport extends AISMessage {
     private transient PositionFixingDevice positionFixingDevice;
     private transient Boolean raimFlag;
     private transient WeakReference<SOTDMACommunicationState> communicationState;
+
 }

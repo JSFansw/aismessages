@@ -40,7 +40,15 @@ public class PositionReportClassAAssignedSchedule extends PositionReport {
     }
 
     @Override
+	public void insert2DB() {
+		super.insert();
+		
+	}
+    
+    @Override
     public AISMessageType getMessageType() {
         return AISMessageType.PositionReportClassAAssignedSchedule;
     }
+
+	
 }

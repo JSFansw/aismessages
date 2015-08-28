@@ -132,4 +132,9 @@ public class GNSSBinaryBroadcastMessage extends AISMessage {
     private transient Integer numOfWords;
     private transient Integer health;
     private transient String binaryData;
+	@Override
+	public void insert2DB() {
+		// TODO Auto-generated method stub
+		
+	}
 }

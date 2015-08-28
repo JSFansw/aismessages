@@ -126,4 +126,9 @@ public class UTCAndDateResponse extends AISMessage {
 	private transient Float longitude;
 	private transient PositionFixingDevice positionFixingDevice;
 	private transient Boolean raimFlag;
+	@Override
+	public void insert2DB() {
+		// TODO Auto-generated method stub
+		
+	}
 }

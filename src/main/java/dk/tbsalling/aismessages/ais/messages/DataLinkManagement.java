@@ -172,4 +172,10 @@ public class DataLinkManagement extends AISMessage {
     private transient Integer reservedSlots4;
     private transient Integer timeout4;
     private transient Integer increment4;
+
+	@Override
+	public void insert2DB() {
+		// TODO Auto-generated method stub
+		
+	}
 }

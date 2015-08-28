@@ -131,4 +131,9 @@ public class SafetyRelatedAcknowledge extends AISMessage {
 	private transient MMSI mmsi4;
 	private transient Integer sequence4;
 	private transient Integer numOfAcks;
+	@Override
+	public void insert2DB() {
+		// TODO Auto-generated method stub
+		
+	}
 }

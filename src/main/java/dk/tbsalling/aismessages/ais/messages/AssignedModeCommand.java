@@ -96,4 +96,10 @@ public class AssignedModeCommand extends AISMessage {
                 ", incrementB=" + getIncrementB() +
                 "} " + super.toString();
     }
+
+	@Override
+	public void insert2DB() {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -77,4 +77,9 @@ public class BinaryMessageSingleSlot extends AISMessage {
     private transient Boolean binaryDataFlag;
     private transient MMSI destinationMMSI;
     private transient String binaryData;
+	@Override
+	public void insert2DB() {
+		// TODO Auto-generated method stub
+		
+	}
 }

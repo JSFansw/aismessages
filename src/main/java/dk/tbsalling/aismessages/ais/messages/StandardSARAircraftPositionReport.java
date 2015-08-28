@@ -140,5 +140,10 @@ public class StandardSARAircraftPositionReport extends AISMessage implements Dyn
 	private transient Boolean assigned;
 	private transient Boolean raimFlag;
 	private transient String radioStatus;
+	@Override
+	public void insert2DB() {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

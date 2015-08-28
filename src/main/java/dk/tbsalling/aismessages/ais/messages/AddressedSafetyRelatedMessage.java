@@ -87,4 +87,9 @@ public class AddressedSafetyRelatedMessage extends AISMessage {
     private transient Boolean retransmit;
     private transient Integer spare;
     private transient String text;
+	@Override
+	public void insert2DB() {
+		// TODO Auto-generated method stub
+		
+	}
 }

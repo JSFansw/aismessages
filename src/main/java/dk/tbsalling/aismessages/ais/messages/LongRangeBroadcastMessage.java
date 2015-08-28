@@ -114,4 +114,9 @@ public class LongRangeBroadcastMessage extends AISMessage implements DynamicData
 	private transient Integer course;
 	private transient Integer positionLatency;
 	private transient Integer spare;
+	@Override
+	public void insert2DB() {
+		// TODO Auto-generated method stub
+		
+	}
 }

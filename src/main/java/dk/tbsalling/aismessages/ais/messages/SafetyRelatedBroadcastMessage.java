@@ -64,4 +64,9 @@ public class SafetyRelatedBroadcastMessage extends AISMessage {
 
     private transient Integer spare;
 	private transient String text;
+	@Override
+	public void insert2DB() {
+		// TODO Auto-generated method stub
+		
+	}
 }

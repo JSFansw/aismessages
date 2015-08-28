@@ -91,4 +91,9 @@ public class BinaryMessageMultipleSlot extends AISMessage {
     private transient Integer applicationId;
     private transient String data;
     // private transient String radioStatus;
+	@Override
+	public void insert2DB() {
+		// TODO Auto-generated method stub
+		
+	}
 }

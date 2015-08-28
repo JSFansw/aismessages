@@ -19,6 +19,7 @@
  */
 package dk.tbsalling.aismessages.ais.messages;
 
+import dk.tbsalling.aismessages.ais.dao.DBTools;
 import dk.tbsalling.aismessages.ais.messages.types.CommunicationState;
 import dk.tbsalling.aismessages.ais.messages.types.ITDMACommunicationState;
 import dk.tbsalling.aismessages.ais.messages.types.ManeuverIndicator;
@@ -140,7 +141,20 @@ public abstract class PositionReport extends AISMessage implements ExtendedDynam
                 ", raimFlag=" + getRaimFlag() +
                 "} " + super.toString();
     }
+    
+    public void insert(){
+    	
+		second =getSecond();
+		Integer mmsi = getSourceMmsi().getMMSI();
+		latitude =getLatitude();
+		longitude = getLongitude();
+		trueHeading=getTrueHeading();
+		courseOverGround=getCourseOverGround();
+		speedOverGround=getSpeedOverGround();
+		new DBTools().insert2Position(second, mmsi, latitude, longitude, trueHeading, courseOverGround, speedOverGround);
+    }
 
+    
     private transient NavigationStatus navigationStatus;
 	private transient Integer rateOfTurn;
 	private transient Float speedOverGround;

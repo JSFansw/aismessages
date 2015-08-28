@@ -43,4 +43,9 @@ public class PositionReportClassAResponseToInterrogation extends PositionReport 
     public AISMessageType getMessageType() {
         return AISMessageType.PositionReportClassAResponseToInterrogation;
     }
+
+	@Override
+	public void insert2DB() {
+		super.insert();
+	}
 }

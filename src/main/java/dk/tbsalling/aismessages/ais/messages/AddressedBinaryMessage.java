@@ -102,6 +102,11 @@ public class AddressedBinaryMessage extends AISMessage {
                 "} " + super.toString();
     }
 
+    
+	@Override
+	public void insert2DB() {
+		
+	}
     private transient Integer sequenceNumber;
     private transient MMSI destinationMmsi;
     private transient Boolean retransmit;
@@ -109,4 +114,5 @@ public class AddressedBinaryMessage extends AISMessage {
     private transient Integer designatedAreaCode;
     private transient Integer functionalId;
     private transient WeakReference<String> binaryData;
+
 }

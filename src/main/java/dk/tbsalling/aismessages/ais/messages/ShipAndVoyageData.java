@@ -31,6 +31,8 @@ import static dk.tbsalling.aismessages.ais.Decoders.TIME_DECODER;
 import static dk.tbsalling.aismessages.ais.Decoders.UNSIGNED_FLOAT_DECODER;
 import static dk.tbsalling.aismessages.ais.Decoders.UNSIGNED_INTEGER_DECODER;
 
+import dk.tbsalling.aismessages.ais.dao.DBTools;
+
 /**
  * Message has a total of 424 bits, occupying two AIVDM sentences. In practice,
  * the information in these fields (especially ETA and destination) is not
@@ -155,7 +157,15 @@ public class ShipAndVoyageData extends AISMessage implements StaticDataReport {
                 ", dataTerminalReady=" + getDataTerminalReady() +
                 "} " + super.toString();
     }
-
+    @Override
+	public void insert2DB() {
+    	shipName=getShipName();
+		Integer mmsi = getSourceMmsi().getMMSI();
+		destination=getDestination();
+		draught=getDraught();
+    	new DBTools().insert2vessl("", mmsi, shipName, destination, draught);
+    	
+	}
     private transient IMO imo;
     private transient String callsign;
     private transient String shipName;
@@ -169,4 +179,5 @@ public class ShipAndVoyageData extends AISMessage implements StaticDataReport {
     private transient Float draught;
     private transient String destination;
     private transient Boolean dataTerminalReady;
+	
 }

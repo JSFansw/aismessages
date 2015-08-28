@@ -192,4 +192,9 @@ public class ExtendedClassBEquipmentPositionReport extends AISMessage implements
     private transient Boolean raimFlag;
     private transient Boolean dataTerminalReady;
     private transient Boolean assigned;
+	@Override
+	public void insert2DB() {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -148,4 +148,9 @@ public class ChannelManagement extends AISMessage {
     private transient Boolean bandA;
     private transient Boolean bandB;
     private transient Integer zoneSize;
+	@Override
+	public void insert2DB() {
+		// TODO Auto-generated method stub
+		
+	}
 }

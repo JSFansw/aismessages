@@ -125,5 +125,10 @@ public class ClassBCSStaticDataReport extends AISMessage implements StaticDataRe
     private transient Integer toStarboard;
     private transient Integer toPort;
     private transient MMSI mothershipMmsi;
+	@Override
+	public void insert2DB() {
+		// TODO Auto-generated method stub
+		
+	}
 
 }
