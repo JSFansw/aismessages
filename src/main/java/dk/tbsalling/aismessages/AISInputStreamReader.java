@@ -35,8 +35,16 @@ import java.util.function.Consumer;
  */
 public class AISInputStreamReader {
 
+	/**
+	 *  对inputStream进行初步处理
+	 * @param inputStream NEMAMessage InputStream
+	 * @param aisMessageConsumer 实现了Consumer接口的对象
+	 */
+	@SuppressWarnings("unchecked")
 	public AISInputStreamReader(InputStream inputStream, Consumer<? super AISMessage> aisMessageConsumer) {
+		
         this.nmeaMessageHandler = new NMEAMessageHandler("SRC", aisMessageConsumer);
+        //将原始数据流和更改过后的nmeaMessageHandler对象传递过去
         this.nmeaMessageInputStreamReader = new NMEAMessageInputStreamReader(inputStream, this.nmeaMessageHandler::accept);
 	}
 

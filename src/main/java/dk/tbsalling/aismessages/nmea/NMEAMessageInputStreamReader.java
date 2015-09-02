@@ -32,6 +32,11 @@ public class NMEAMessageInputStreamReader {
 
 	private static final Logger log = Logger.getLogger(NMEAMessageInputStreamReader.class.getName());
 
+	/**
+	 * 
+	 * @param inputStream 需要进行数据解析的原始数据流
+	 * @param nmeaMessageHandler nmeaMessageHandler
+	 */
 	public NMEAMessageInputStreamReader(InputStream inputStream, Consumer<? super NMEAMessage> nmeaMessageHandler) {
 		this.nmeaMessageHandler = nmeaMessageHandler;
 		this.inputStream = inputStream;
@@ -41,6 +46,10 @@ public class NMEAMessageInputStreamReader {
 		this.stopRequested = true;
 	}
 
+	/**
+	 * 组装NMEA数据
+	 * @throws IOException
+	 */
 	public void run() throws IOException {
 	    log.info("NMEAMessageInputStreamReader running.");
 
@@ -52,7 +61,7 @@ public class NMEAMessageInputStreamReader {
 			try {
 				//组装NMEAMessage信息
 				NMEAMessage nmea = NMEAMessage.fromString(string);
-				//校验nmea信息
+				//更改nmeaMessageHandler中NMEAMessage对象
 				nmeaMessageHandler.accept(nmea);
 				
 	//			log.fine("Received: " + nmea.toString());

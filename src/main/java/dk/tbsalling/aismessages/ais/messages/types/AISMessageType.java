@@ -62,6 +62,11 @@ public enum AISMessageType {
 	    return toString();
 	}
 
+	/**
+	 * 获取密文消息中十进制数字对应的消息类型
+	 * @param integer 密文中第0位到第5位所表示的十进制数
+	 * @return AISMessageType
+	 */
 	public static AISMessageType fromInteger(Integer integer) {
 		if (integer != null) {
 			for (AISMessageType b : AISMessageType.values()) {

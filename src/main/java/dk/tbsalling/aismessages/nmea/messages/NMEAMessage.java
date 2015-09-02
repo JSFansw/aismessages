@@ -40,23 +40,59 @@ import java.io.Serializable;
 // TODO optimize getters
 public class NMEAMessage implements Serializable {
 
+	/**
+	 * 根据字符串生成NMEAMessage对象
+	 * @param nmeaString 用于生成NMEAMessage对象的原始数据
+	 * @return NMEAMessage
+	 */
 	public static NMEAMessage fromString(String nmeaString) {
 		return new NMEAMessage(nmeaString);
 	}
 
+	/**
+	 * 
+	 * @return Boolean 对数据合法性的判断
+	 */
 	public final boolean isValid() {
         String messageType = getMessageType();
-
-        if(messageType == null || messageType.length() != 5) return false;
-		
+        if(messageType == null || messageType.length() != 5) return false;		
 		String type = messageType.substring(2);
 		if (! ("VDM".equals(type) || "VDO".equals(type))) {
 			return false;
 		}
-		
+		int CRCString=getChecksum();
+		if(calcCRC()!=getChecksum()){
+			return false;
+		}
 		return true;
 	}
 
+	/**
+	 *  对数据进行CRC校验，计算CRC值
+	 * @param ais 原始数据
+	 * @return 计算出来的CRC校验值
+	 */
+	public  int calcCRC( ) {
+		byte[] data = null;
+		if (rawMessage.contains("!") && rawMessage.contains("*")) {
+			data = rawMessage.substring(1, rawMessage.indexOf("*")).getBytes();
+		} else {
+			data = rawMessage.getBytes();
+		}
+		int crc = 0;
+		for (byte pos : data) {
+			if (crc == 0) {
+				crc = pos;
+			} else {
+				crc ^= pos;
+			}
+		}
+//		String result = String.format("%1$02X", crc);
+//		System.out.println("calcCRC--"+result);
+		//logger.info("calcCRC(ais) - Exit");
+		return crc;
+	}
+	
     @SuppressWarnings("unused")
 	public String getMessageType() {
         String[] msg = rawMessage.split(",");
@@ -69,6 +105,10 @@ public class NMEAMessage implements Serializable {
         return isBlank(msg[1]) ? null : Integer.valueOf(msg[1]);
 	}
 
+    /**
+     *  获取一条完整数据包含条数的标识
+     * @return
+     */
     @SuppressWarnings("unused")
     public Integer getFragmentNumber() {
         String[] msg = rawMessage.split(",");
@@ -117,6 +157,9 @@ public class NMEAMessage implements Serializable {
         validate();
 	}
 
+	/**
+	 *  对数据进行格式校验
+	 */
 	private void validate() {
         // !AIVDM,1,1,,B,15MvlfPOh2G?nwbEdVDsnSTR00S?,0*41
 
@@ -162,6 +205,11 @@ public class NMEAMessage implements Serializable {
         return rawMessage.hashCode();
     }
 
+    /**
+     * 判断字符串是不是空
+     * @param s 需要验证的字符串
+     * @return 是否为空
+     */
     private static boolean isBlank(String s) {
 		return s == null || s.trim().length() == 0;
 	}

@@ -28,7 +28,6 @@ public class getAisFromDB implements Consumer<AISMessage> {
 		// 将aismessage存入数据库中
 		System.out.println("Received AIS message: " + aisMessage);
 		aisMessage.insert2DB();
-
 	}
 
 	public void getRun() {
@@ -44,6 +43,7 @@ public class getAisFromDB implements Consumer<AISMessage> {
 				if (str == null)
 					return;
 				inputstream = new ByteArrayInputStream(str.getBytes());
+				//对字节流中的信息进行NMEAMessageHandler的组装，NMEAMessageInputStreamReader的组装
 				AISInputStreamReader streamReader = new AISInputStreamReader(inputstream, this);
 				streamReader.run();
 			}
@@ -53,6 +53,10 @@ public class getAisFromDB implements Consumer<AISMessage> {
 		}
 	}
 
+	/**
+	 * 返回一个可用的数据库连接对象
+	 * @return Connection 数据库的连接对象
+	 */
 	public Connection getDBConnection() {
 		Connection conn;
 		try {
