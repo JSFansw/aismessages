@@ -143,7 +143,8 @@ public abstract class PositionReport extends AISMessage implements ExtendedDynam
     }
     
     public void insert(){
-    	
+
+    	long date1=System.currentTimeMillis();
 		second =getSecond();
 		Integer mmsi = getSourceMmsi().getMMSI();
 		latitude =getLatitude();
@@ -151,7 +152,12 @@ public abstract class PositionReport extends AISMessage implements ExtendedDynam
 		trueHeading=getTrueHeading();
 		courseOverGround=getCourseOverGround();
 		speedOverGround=getSpeedOverGround();
-		new DBTools().insert2Position(second, mmsi, latitude, longitude, trueHeading, courseOverGround, speedOverGround);
+
+		long date2=System.currentTimeMillis();
+		System.err.println("插入表耗时"+(date2-date1));
+		DBTools.insert2Position(second, mmsi, latitude, longitude, trueHeading, courseOverGround, speedOverGround);
+		long date3=System.currentTimeMillis();
+		System.err.println("插入表111耗时"+(date3-date2));
     }
 
     

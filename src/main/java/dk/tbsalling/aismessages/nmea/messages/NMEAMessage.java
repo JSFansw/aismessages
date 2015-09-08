@@ -143,8 +143,10 @@ public class NMEAMessage implements Serializable {
     @SuppressWarnings("unused")
     public Integer getChecksum() {
         String[] msg = rawMessage.split(",");
-        String msg1[] = msg[6].split("\\*");
+        String msg1[] = msg[msg.length-1].split("\\*");
 		return isBlank(msg1[1]) ? null : Integer.valueOf(msg1[1], 16);
+		
+		//!ABVDM,1,1,1,B,16:>;3PP!ABVDM,1,1,3,A,403soaQuvD1R`8RfA:BKkl700@GO,0*47
 	}
 
     @SuppressWarnings("unused")

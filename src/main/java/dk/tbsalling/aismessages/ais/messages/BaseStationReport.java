@@ -143,7 +143,7 @@ public class BaseStationReport extends AISMessage {
 		latitude =getLatitude();
 		longitude = getLongitude();
 		String dateStr = year + "-" + month + "-" + day + " " + hour + ":" + minute+ ":" + second;
-		new DBTools().insert2baseStation(dateStr, mmsi, latitude, longitude);
+		DBTools.insert2baseStation(dateStr, mmsi, latitude, longitude);
 	}
     private transient Integer year;
     private transient Integer month;

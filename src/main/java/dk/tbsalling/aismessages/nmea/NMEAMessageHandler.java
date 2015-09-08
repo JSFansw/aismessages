@@ -80,6 +80,13 @@ public class NMEAMessageHandler implements Consumer<NMEAMessage> {
 		} else if (numberOfFragments == 1) {
 			LOG.finest("Handling unfragmented NMEA message");
             AISMessage aisMessage = AISMessage.create(nmeaMessage);
+            
+            
+            if(aisMessage==null){
+            	return;
+            }
+            
+            
             //组建AISMessage
             aisMessage.setMetadata(new Metadata(source));
             sendToAisMessageReceivers(aisMessage);

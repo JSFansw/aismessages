@@ -21,33 +21,55 @@ import dk.tbsalling.aismessages.nmea.messages.NMEAMessage;
 public class getAisFromDB implements Consumer<AISMessage> {
 	Consumer<? super NMEAMessage> nmeaMessageHandler;
 	ConnectionPool connPool;
+	int messageId;
 
 	// 重写accept方法，对返回aisMessage 进行处理
 	@Override
 	public void accept(AISMessage aisMessage) {
 		// 将aismessage存入数据库中
-		System.out.println("Received AIS message: " + aisMessage);
+	System.out.println("Received AIS message: " + aisMessage);
+	
 		aisMessage.insert2DB();
+//		
+//		Connection conn = getDBConnection();
+//		try {
+//			Statement stm=conn.createStatement();
+//			stm.execute("update ais_nmea set isread=1 where id="+messageId);
+//			stm.close();
+//			conn.close();
+//			connPool.returnConnection(conn); // 连接使用完后释放连接到连接池
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+		
 	}
 
 	public void getRun() {
+
 		try {
+			long date1=System.currentTimeMillis();
 			Connection conn = getDBConnection();
-			PreparedStatement ps = conn.prepareStatement("select * from ais_nmea");
+//			Statement ps=conn.createStatement();
+			PreparedStatement ps = conn.prepareStatement("select * from ais_nmea where isread=0 limit 10000");
 			// 设置每次读取的消息条数
-			ps.setFetchSize(Integer.MIN_VALUE);
-			ResultSet rs = ps.executeQuery();
-			InputStream inputstream = null;
-			while (rs.next()) {
-				String str = rs.getString("message");
-				if (str == null)
-					return;
-				inputstream = new ByteArrayInputStream(str.getBytes());
-				//对字节流中的信息进行NMEAMessageHandler的组装，NMEAMessageInputStreamReader的组装
+//			ps.setFetchSize(1000);
+			//循环读取数据库
+//			while(true){
+				ResultSet rs = ps.executeQuery();
+				InputStream inputstream = null;
+				StringBuffer str=new StringBuffer();
+				while (rs.next()) {
+					str.append(rs.getString("message")).append("\n");
+					messageId=rs.getInt("id");
+				}
+				inputstream = new ByteArrayInputStream(str.toString().getBytes());
+				// 对字节流中的信息进行NMEAMessageHandler的组装，NMEAMessageInputStreamReader的组装
 				AISInputStreamReader streamReader = new AISInputStreamReader(inputstream, this);
 				streamReader.run();
-			}
+//			}
 
+//				long date2=System.currentTimeMillis();
+//				System.out.println("插入ddddd信息表耗时"+(date2-date1));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -55,6 +77,7 @@ public class getAisFromDB implements Consumer<AISMessage> {
 
 	/**
 	 * 返回一个可用的数据库连接对象
+	 * 
 	 * @return Connection 数据库的连接对象
 	 */
 	public Connection getDBConnection() {
@@ -74,8 +97,11 @@ public class getAisFromDB implements Consumer<AISMessage> {
 	}
 
 	public static void main(String[] args) {
-
+		long date1=System.currentTimeMillis();
 		new getAisFromDB().getRun();
+		long date2=System.currentTimeMillis();
+		System.out.println("插入ddddd信息表耗时"+(date2-date1));
+
 		/*
 		 * String sql[] = { "!ABVDM,1,1,7,A,15DEGl001k`aS1vB<acLpr?R08Lj,0*0A",
 		 * "!ABVDM,1,1,8,A,2AF40003wk<tSF0l4Q@13wv2Pcp0,0*6D",

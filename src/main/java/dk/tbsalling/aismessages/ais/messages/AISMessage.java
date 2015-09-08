@@ -288,9 +288,10 @@ public abstract class AISMessage implements Serializable, CachedDecodedValues {
 	 * @return 具体的AISMessage对象
 	 */
 	public static AISMessage create(NMEAMessage... nmeaMessages) {
-		BiFunction<NMEAMessage[], String, AISMessage> aisMessageConstructor;
+		BiFunction<NMEAMessage[], String, AISMessage> aisMessageConstructor=null;
 
 		String bitString = decodePayloadToBitString(nmeaMessages);
+		int type=Integer.parseInt(bitString.substring(0, 6), 2);
 		AISMessageType messageType = AISMessageType.fromInteger(Integer.parseInt(bitString.substring(0, 6), 2));
 
 		if (messageType != null) {
@@ -384,7 +385,9 @@ public abstract class AISMessage implements Serializable, CachedDecodedValues {
 			for (NMEAMessage nmeaMessage : nmeaMessages) {
 				sb.append(nmeaMessage);
 			}
-			throw new InvalidMessage("Cannot extract message type from NMEA message: " + sb.toString());
+	//		throw new InvalidMessage("Cannot extract message type from NMEA message: " + sb.toString());
+			System.err.println("Cannot extract message type from NMEA message: " + sb.toString());
+			return null;
 		}
 
 		return aisMessageConstructor.apply(nmeaMessages, bitString);

@@ -163,7 +163,7 @@ public class ShipAndVoyageData extends AISMessage implements StaticDataReport {
 		Integer mmsi = getSourceMmsi().getMMSI();
 		destination=getDestination();
 		draught=getDraught();
-    	new DBTools().insert2vessl("", mmsi, shipName, destination, draught);
+    	DBTools.insert2vessl(mmsi, shipName, destination, draught);
     	
 	}
     private transient IMO imo;
